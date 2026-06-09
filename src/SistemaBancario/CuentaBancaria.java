@@ -16,8 +16,15 @@ public class CuentaBancaria {
 
     public CuentaBancaria(Cliente cliente,double saldo) {
         this(cliente);
-        this.titular = cliente;
-        this.saldo = saldo;
+        if(cliente != null)
+            this.titular = cliente;
+        else
+            throw new IllegalArgumentException("Cliente no existe");
+
+        if (saldo>=0)
+            this.saldo=saldo;
+        else
+            throw  new IllegalArgumentException("El saldo inicial no puede ser negativo");
     }
 
     public int getNumeroCuenta() {
@@ -36,7 +43,7 @@ public class CuentaBancaria {
         return this.activa;
     }
 
-    public void setSaldo(int saldo) {
+    public void depositar(double saldo) {
         this.saldo = saldo;
     }
 
@@ -59,10 +66,10 @@ public class CuentaBancaria {
     @Override
     public String toString() {
         return "CuentaBancaria{" +
-                "numeroCuenta=" + numeroCuenta +
-                ", titular=" + titular +
-                ", saldo=" + saldo +
-                ", activa=" + activa +
+                "numeroCuenta=" + this.numeroCuenta +
+                ", titular=" + this.titular +
+                ", saldo=" + this.saldo +
+                ", activa=" + this.activa +
                 '}';
     }
 }

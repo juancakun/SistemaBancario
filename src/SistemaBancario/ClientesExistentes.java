@@ -84,13 +84,23 @@ public class ClientesExistentes {
         System.out.println(cuentasExistentes);
     }
 
+    public static CuentaBancaria buscarCuentaCliente(Cliente cliente){
+        for(var cuenta: cuentaBancaria){
+            if(cliente.getIdCliente() == cuenta.getTitular().getIdCliente()){
+
+            }
+        }
+    }
+
     public static void mostrarTodasCuentas(Cliente cliente){
         for(var cuenta: cuentaBancaria){
             if(cliente.getIdCliente() == cuenta.getTitular().getIdCliente())
                 System.out.println(cuenta.toString());
-            else
-                System.out.println("El titular de la cuenta no existe");
         }
+    }
+
+    public static void depositarDinero(Cliente cliente, double saldo){
+
     }
 
 }

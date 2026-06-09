@@ -48,8 +48,8 @@ public class Banco {
             case 3 -> mostrarClientes();
             case 4 -> mostrarCuentas();
             case 5 -> mostrarTodasCuentas(consola);
-            case 6 -> depositarDinero();
-            case 7 -> retirarDinero();
+            case 6 -> depositarDinero(consola);
+            case 7 -> retirarDinero(consola);
             case 8 -> transferirDinero();
             case 9 -> consultarSaldo();
             case 10 -> verHistorialTransacciones();
@@ -83,10 +83,17 @@ public class Banco {
             consola.nextLine();
             var saldo = 0.0;
             if(iniciarSaldo) {
-                System.out.print("Con cuánto saldo desea iniciar la cuenta: ");
-                saldo = consola.nextDouble();
+
+                do{
+                    System.out.print("Con cuánto saldo desea iniciar la cuenta: ");
+                    saldo = consola.nextDouble();
+                    if(saldo < 0)
+                        System.out.println("El saldo inicial no puede ser negativo");
+                }while(saldo < 0);
+
                 consola.nextLine();
                 ClientesExistentes.crearCuentaCliente(ClientesExistentes.buscarCliente(idCliente), saldo);
+
             } else {
                 ClientesExistentes.crearCuentaCliente(ClientesExistentes.buscarCliente(idCliente), saldo);
                 System.out.println("Cuenta creada");
@@ -110,11 +117,17 @@ public class Banco {
         ClientesExistentes.mostrarTodasCuentas(cliente);
     }
 
-    private static void depositarDinero(){
+    private static void depositarDinero(Scanner consola){
+        System.out.println("Iniciando depositar dinero");
+        System.out.print("A qué cliente desea ingresar el deposito?: ");
+        var idCliente = Integer.parseInt(consola.nextLine());
+        Cliente cliente = ClientesExistentes.buscarCliente(idCliente);
+        System.out.print("Cuáunto dinero desea ingresar en la cuenta?: ");
+        var saldo = consola.nextDouble();
 
     }
 
-    private static void retirarDinero(){
+    private static void retirarDinero(Scanner consola){
 
     }
 
