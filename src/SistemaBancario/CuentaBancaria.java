@@ -44,7 +44,23 @@ public class CuentaBancaria {
     }
 
     public void depositar(double saldo) {
-        this.saldo = saldo;
+        if(saldo>0) {
+            System.out.println("El saldo depositado es: " + saldo);
+            this.saldo += saldo;
+            System.out.println("El nuevo saldo es: " + this.saldo);
+        }
+        else
+            throw new IllegalArgumentException("El saldo a depositar no puede ser negativo o igual a cero.");
+    }
+
+    public void retirar(double saldo) {
+        if(saldo<=this.saldo) {
+            this.saldo -= saldo;
+            System.out.println("El saldo retirado es: " + saldo);
+            System.out.println("El nuevo saldo es: " + this.saldo);
+        }
+        else
+            throw new IllegalArgumentException("El dinero a retirar no puede ser mayor al disponible.");
     }
 
     public void setActiva(boolean activa) {

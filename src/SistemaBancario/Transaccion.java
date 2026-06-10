@@ -1,26 +1,40 @@
 package SistemaBancario;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Transaccion {
 
     private static int numeroTransaccion;
-    private int idTransaccion;
+    private final int idTransaccion;
     private String tipoTransaccion;
-    private int montoTransaccion;
-    private int fechaTransaccion;
-    private int cuentaOrigen;
-    private int cuentaDestino;
+    private double montoTransaccion;
+    private double montoAnterior;
+    private double montoPosterior;
+    private LocalDate fechaTransaccion;
+    private CuentaBancaria cuentaOrigen;
+    private CuentaBancaria cuentaDestino;
 
-    public Transaccion() {}
+    public Transaccion() {
+        this.idTransaccion = ++numeroTransaccion ;
+    }
 
-    public Transaccion(String tipoTransaccion, int montoTransaccion, int fechaTransaccion, int cuentaOrigen, int cuentaDestino) {
+    public Transaccion(int tipoTransaccion, double montoTransaccion, double montoAnterior, double montoPosterior,LocalDate fechaTransaccion, CuentaBancaria cliente, CuentaBancaria cliente2) {
         this();
-        this.tipoTransaccion = tipoTransaccion;
+        switch (tipoTransaccion) {
+            case 1 -> this.tipoTransaccion = "Deposito";
+            case 2 -> this.tipoTransaccion = "Retiro";
+            case 3 -> this.tipoTransaccion = "Transferencia";
+        }
+        this.montoAnterior = montoAnterior;
+        this.montoPosterior = montoPosterior;
         this.montoTransaccion = montoTransaccion;
         this.fechaTransaccion = fechaTransaccion;
-        this.cuentaOrigen = cuentaOrigen;
-        this.cuentaDestino = cuentaDestino;
+        if(cliente != null && cliente2 != null) {
+            this.cuentaOrigen = cliente;
+            this.cuentaDestino = cliente2;
+        }
+
     }
 
     public int getIdTransaccion() {
@@ -31,19 +45,19 @@ public class Transaccion {
         return this.tipoTransaccion;
     }
 
-    public int getMontoTransaccion() {
+    public double getMontoTransaccion() {
         return this.montoTransaccion;
     }
 
-    public int getFechaTransaccion() {
+    public LocalDate getFechaTransaccion() {
         return this.fechaTransaccion;
     }
 
-    public int getCuentaOrigen() {
+    public CuentaBancaria getCuentaOrigen() {
         return this.cuentaOrigen;
     }
 
-    public int getCuentaDestino() {
+    public CuentaBancaria getCuentaDestino() {
         return this.cuentaDestino;
     }
 
@@ -51,19 +65,19 @@ public class Transaccion {
         this.tipoTransaccion = tipoTransaccion;
     }
 
-    public void setMontoTransaccion(int montoTransaccion) {
+    public void setMontoTransaccion(double montoTransaccion) {
         this.montoTransaccion = montoTransaccion;
     }
 
-    public void setFechaTransaccion(int fechaTransaccion) {
+    public void setFechaTransaccion(LocalDate fechaTransaccion) {
         this.fechaTransaccion = fechaTransaccion;
     }
 
-    public void setCuentaOrigen(int cuentaOrigen) {
+    public void setCuentaOrigen(CuentaBancaria cuentaOrigen) {
         this.cuentaOrigen = cuentaOrigen;
     }
 
-    public void setCuentaDestino(int cuentaDestino) {
+    public void setCuentaDestino(CuentaBancaria cuentaDestino) {
         this.cuentaDestino = cuentaDestino;
     }
 
@@ -85,6 +99,8 @@ public class Transaccion {
                 "idTransaccion=" + this.idTransaccion +
                 ", tipoTransaccion='" + this.tipoTransaccion + '\'' +
                 ", montoTransaccion=" + this.montoTransaccion +
+                ", saldo anterior=" + this.montoAnterior +
+                ", saldo actualizado=" + this.montoPosterior +
                 ", fechaTransaccion=" + this.fechaTransaccion +
                 ", cuentaOrigen=" + this.cuentaOrigen +
                 ", cuentaDestino=" + this.cuentaDestino +

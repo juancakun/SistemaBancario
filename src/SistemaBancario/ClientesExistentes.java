@@ -1,5 +1,6 @@
 package SistemaBancario;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ public class ClientesExistentes {
 
     private static final List<Cliente> cliente;
     private static final List<CuentaBancaria> cuentaBancaria;
-    private static final List<Transaccion> transaccion ;
+    private static final List<Transaccion> transacciones ;
 
 
     //Bloque de tipo estatico de cuentas
@@ -15,7 +16,7 @@ public class ClientesExistentes {
     static{
         cliente = new ArrayList<>();
         cuentaBancaria = new ArrayList<>();
-        transaccion = new ArrayList<>();
+        transacciones = new ArrayList<>();
         cliente.add(new Cliente("Juan", "Carlos", "juancarlos.hdz.montero@gmail", "5561524910"));
         cliente.add(new Cliente("Ana", "Martínez", "ana.martinez@gmail.com", "5512345678"));
         cliente.add(new Cliente("Luis", "García", "luis.garcia@gmail.com", "5523456789"));
@@ -51,7 +52,6 @@ public class ClientesExistentes {
     public static boolean buscarClienteId(int idCliente){
         for (var cliente : cliente) {
             if (cliente.getIdCliente() == idCliente) {
-                System.out.println("El titular de la cuenta es:" + cliente.getNombre() + " " + cliente.getApellido());
                 return true;
             }
         }
@@ -84,23 +84,35 @@ public class ClientesExistentes {
         System.out.println(cuentasExistentes);
     }
 
-    public static CuentaBancaria buscarCuentaCliente(Cliente cliente){
+    public static void mostrarTodasCuentas(Cliente cliente){
         for(var cuenta: cuentaBancaria){
-            if(cliente.getIdCliente() == cuenta.getTitular().getIdCliente()){
-
+            if(cliente.getIdCliente() == cuenta.getTitular().getIdCliente()) {
+                System.out.println(cuenta);
             }
         }
     }
 
-    public static void mostrarTodasCuentas(Cliente cliente){
-        for(var cuenta: cuentaBancaria){
-            if(cliente.getIdCliente() == cuenta.getTitular().getIdCliente())
-                System.out.println(cuenta.toString());
+    public static CuentaBancaria seleccionarCuentaCliente(Cliente cliente, int idCuentaCliente){
+        for(var cuenta: cuentaBancaria) {
+            if(cliente.getIdCliente() == cuenta.getTitular().getIdCliente()) {
+                if (cuenta.getNumeroCuenta() == idCuentaCliente) {
+                    System.out.println(cuenta);
+                    return cuenta;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static void historialTransaccion(int tipoTransaccion, double saldo, double montoAnterior , double montoPosterior , CuentaBancaria cuentaBancaria1, CuentaBancaria cuentaBancaria2){
+        LocalDate fechaTransaccion = LocalDate.now();
+        Transaccion transaccion = new Transaccion(tipoTransaccion, saldo, montoAnterior, montoPosterior,fechaTransaccion, cuentaBancaria1, cuentaBancaria2);
+        transacciones.add(transaccion);
+    }
+
+    public static void mostrarTransacciones (){
+        for(var transaccion: transacciones){
+            System.out.println(transaccion);
         }
     }
-
-    public static void depositarDinero(Cliente cliente, double saldo){
-
-    }
-
 }
