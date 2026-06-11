@@ -51,8 +51,8 @@ public class Banco {
             case 5 -> mostrarTodasCuentas(consola);
             case 6 -> depositarDinero(consola);
             case 7 -> retirarDinero(consola);
-            case 8 -> transferirDinero();
-            case 9 -> consultarSaldo();
+            case 8 -> transferirDinero(consola);
+            case 9 -> consultarSaldo(consola);
             case 10 -> verHistorialTransacciones();
             case 11 -> salir = true;
             default -> System.out.println("Esa no es una opción valida");
@@ -167,12 +167,58 @@ public class Banco {
         ClientesExistentes.historialTransaccion(tipoTransaccion, saldo, montoAnterior, montoPosterior, cuentaBancaria, cuentaBancaria);
     }
 
-    private static void transferirDinero(){
+    private static void transferirDinero(Scanner consola){
+        System.out.println("Iniciando transferir dinero");
+
+        //Cliente 1
+
+        System.out.print("Que cliente desea transferir dinero?: ");
+        var idCuenta = Integer.parseInt(consola.nextLine());
+        Cliente cliente = ClientesExistentes.buscarCliente(idCuenta);
+
+        ClientesExistentes.mostrarTodasCuentas(cliente);
+
+        System.out.print("Desde que cuenta del cliente desea transferir dinero?: ");
+        var idCuentaCliente = Integer.parseInt(consola.nextLine());
+        CuentaBancaria cuentaBancaria = ClientesExistentes.seleccionarCuentaCliente(cliente, idCuentaCliente);
+
+        System.out.print("Cuánto dinero quiere transferir de la cuenta bancaria?");
+        var saldo = Double.parseDouble(consola.nextLine());
+
+        //Cliente 2
+
+        System.out.print("Qué cliente desea que reciba el dinero?: ");
+        var idCuenta2 = Integer.parseInt(consola.nextLine());
+        Cliente cliente2 = ClientesExistentes.buscarCliente(idCuenta2);
+
+        ClientesExistentes.mostrarTodasCuentas(cliente);
+
+        System.out.print("A qué cuenta del cliente desea transferir dinero?: ");
+        var idCuentaCliente2 = Integer.parseInt(consola.nextLine());
+        CuentaBancaria cuentaBancaria2 = ClientesExistentes.seleccionarCuentaCliente(cliente2, idCuentaCliente2);
+
+        var tipoTransaccion = 3;
+
+        var montoAnterior = cuentaBancaria.getSaldo();
+
+        cuentaBancaria.retirar(saldo);
+        cuentaBancaria2.depositar(saldo);
+
+        var montoPosterior = cuentaBancaria.getSaldo();
+
+        ClientesExistentes.historialTransaccion(tipoTransaccion, saldo, montoAnterior, montoPosterior, cuentaBancaria, cuentaBancaria2);
 
     }
 
-    private static void consultarSaldo(){
+    private static void consultarSaldo(Scanner consola){
+        System.out.println("Iniciando consultar saldo");
+        System.out.print("Que cliente desea consultar saldo?: ");
+        var idCliente = Integer.parseInt(consola.nextLine());
+        Cliente cliente = ClientesExistentes.buscarCliente(idCliente);
 
+        System.out.print("Qué cuenta desea consultar saldo?: ");
+        var idCuentaCliente = Integer.parseInt(consola.nextLine());
+        CuentaBancaria cuentaBancaria = ClientesExistentes.seleccionarCuentaCliente(cliente, idCuentaCliente);
     }
 
     private static void verHistorialTransacciones(){

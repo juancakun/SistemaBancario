@@ -10,12 +10,12 @@ public class CuentaBancaria {
     private double saldo;
     private boolean activa=true;
 
-    public CuentaBancaria(Cliente cliente) {
+    public CuentaBancaria() {
         this.numeroCuenta = ++contadorCuentas;
     }
 
     public CuentaBancaria(Cliente cliente,double saldo) {
-        this(cliente);
+        this();
         if(cliente != null)
             this.titular = cliente;
         else
